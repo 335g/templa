@@ -2,7 +2,7 @@
   outputs = inputs: {
     templates = {
       rs = {
-        path = ./rust
+        path = ./rust;
         description = "";
       };
     };
