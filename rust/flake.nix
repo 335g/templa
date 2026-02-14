@@ -5,6 +5,7 @@
     crane.url = "github:ipetkov/crane/v0.21.3";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs = inputs@{ self, ... }:
@@ -13,6 +14,10 @@
         "x86_64-linux"
         "aarch64-linux"
         "aarch64-darwin"
+      ];
+
+      imports = [
+        inputs.treefmt-nix.flakeModule
       ];
 
       perSystem = { pkgs, system, ... }:
@@ -28,12 +33,20 @@
             ];
           };
 
+          treefmt = {
+            projectRootFile = "flake.nix";
+            programs.nixfmt.enable = true;
+            programs.rustfmt.enable = true;
+            programs.taplo.enable = true;
+          };
+
           devShells.default = craneLib.devShell {
             packages = with pkgs; [
               taplo
               sccache
               clang
               mold
+              prek
             ];
 
             env = {
