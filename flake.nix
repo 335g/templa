@@ -1,8 +1,8 @@
 {
   outputs = inputs: {
     templates = {
-      rust = {
-        path = "./rust";
+      rs = {
+        path = ./rust
         description = "";
       };
     };
